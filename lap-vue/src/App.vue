@@ -1,4 +1,5 @@
 <template>
+  <Header/>
   <main>
     <h1 v-if="showWelcome">Welcome Everyone!</h1>
     <h1 v-else>We are Senior Now.</h1>
@@ -14,6 +15,7 @@
 </template>
 
 <script >
+import Header from './components/Header.vue';
 
 export default {
   data() {
