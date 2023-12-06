@@ -18,20 +18,30 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import { useCookies } from '@/stores/cookies'
 
 export default {
   setup() {
+    const cookiesStore = useCookies();
     const cookies = ref([]);
 
     onMounted(async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/test_cookies');
-        cookies.value = response.data.cookies;
+        await cookiesStore.refreshCookies();
+        cookies.value = cookiesStore.cookies;
+        console.log("cookies ", JSON.stringify(cookies.value));
       } catch (error) {
         console.error('Error fetching cookies:', error);
       }
     });
+    // onMounted(async () => {
+    //   try {
+    //     const response = await axios.get('http://localhost:8000/api/test_cookies');
+    //     cookies.value = response.data.cookies;
+    //   } catch (error) {
+    //     console.error('Error fetching cookies:', error);
+    //   }
+    // });
 
     const getImageUrl = (imagePath) => {
       if(imagePath == '/storage/images/default_img.webp'){

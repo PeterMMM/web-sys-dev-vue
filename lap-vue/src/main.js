@@ -6,6 +6,7 @@ import Cookies from './components/Cookies.vue';
 import Nav from './components/Nav.vue';
 import Footer from './components/Footer.vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { createPinia } from 'pinia';
 
 const routes = [
   { path: '/', component: Home },
@@ -18,9 +19,11 @@ const router = createRouter({
   routes,
 });
 
+const pinia = createPinia();
 const app = createApp(App);
 app.use(router);
 app
   .component('Nav', Nav)
   .component('Footer', Footer);
+app.use(pinia);
 app.mount('#app');

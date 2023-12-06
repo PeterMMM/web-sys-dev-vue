@@ -11,7 +11,7 @@
             alt="Cookies Image"
             class="mb-4 rounded-md"
           />
-          <h2 class="text-xl font-semibold mb-2">Explore Delicious Cookies</h2>
+          <h2 class="text-xl font-semibold mb-2">Best Cookie - {{ cookiesStore.bestCookie }}</h2>
           <p class="text-gray-700 mb-4">
             Dive into our collection of mouth-watering cookie recipes and indulge in the joy of baking.
           </p>
@@ -41,8 +41,17 @@
 </template>
 
 <script>
-export default {
+import { useCookies } from '@/stores/cookies'
 
+export default {
+  setup(){
+    const cookiesStore = useCookies();
+    return { cookiesStore };
+  },
+  mounted() {
+    this.cookiesStore.updateBestCookie('Sunner Cookie');
+    console.log("best cookie ", this.cookiesStore.bestCookie);
+  }
 }
 </script>
 
