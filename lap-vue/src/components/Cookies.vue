@@ -19,17 +19,19 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { useCookies } from '@/stores/cookies'
+import { useAuthStore } from '@/stores/auth'
 
 export default {
   setup() {
     const cookiesStore = useCookies();
     const cookies = ref([]);
+    const authStore = useAuthStore();
 
     onMounted(async () => {
       try {
         await cookiesStore.refreshCookies();
         cookies.value = cookiesStore.cookies;
-        console.log("cookies ", JSON.stringify(cookies.value));
+        // console.log("cookies ", JSON.stringify(cookies.value));
       } catch (error) {
         console.error('Error fetching cookies:', error);
       }
@@ -56,7 +58,15 @@ export default {
       return new Date(dateString).toLocaleDateString();
     };
 
-    return { cookies, getImageUrl, formatDate };
+    return { cookies, getImageUrl, formatDate, authStore };
+  },
+  mounted(){
+    if(this.authStore.token){
+      console.log("login");
+    }else{
+      console.log("guest");
+      this.$router.push({ name: 'Login' });
+    }
   }
 };
 </script>
